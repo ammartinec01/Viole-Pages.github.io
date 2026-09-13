@@ -1,0 +1,846 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  --color-bg-main: #fafaf9;
+  --color-lavender: #e9d5ff;
+  --color-mint: #d1fae5;
+  --color-peach: #ffedd5;
+  --color-yellow: #fef08a;
+  
+  --color-card-bg: rgba(255, 255, 255, 0.92);
+  --color-text-main: #292524;
+  --color-text-muted: #78716c;
+  
+  --color-primary: #f43f5e;
+  --color-primary-dark: #e11d48;
+  
+  --radius-xl: 28px;
+  --radius-lg: 16px;
+}
+
+html, body {
+ margin: 0;
+  padding: 0;
+  min-height: 100%;
+  overflow-x: hidden; /* Solo bloqueamos el desbordamiento horizontal */
+  overflow-y: auto; /* Evita que aparezca la barra lateral */
+}
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  background-color: var(--color-bg-main);
+  color: var(--color-text-main);
+  min-height: 100dvh; /* Usamos dvh (Dynamic Viewport Height) para adaptarse a móviles */
+}
+.app-viewport {
+min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* GRADIENTES MESH DE SALÓN CREATIVO */
+.mesh-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.mesh-ball {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(50px);
+  opacity: 0.65;
+}
+
+.ball-lavender { width: 380px; height: 380px; background: var(--color-lavender); top: -5%; left: -5%; }
+.ball-mint { width: 360px; height: 360px; background: var(--color-mint); bottom: -5%; right: -5%; }
+.ball-peach { width: 300px; height: 300px; background: var(--color-peach); top: 40%; right: 10%; }
+
+/* DOODLES / ILUSTRACIONES FLOTANTES DISPERSAS */
+.doodles-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.doodle {
+  position: absolute;
+  opacity: 0.8;
+  filter: none;
+}
+
+/* --- ESQUINA SUPERIOR IZQUIERDA --- */
+.d-umbrella { top: 8%; left: 8%; }
+
+/* --- ESQUINA SUPERIOR DERECHA --- */
+.d-flower-1 { top: 10%; right: 8%; }
+.d-wand     { top: 25%; right: 18%; }
+
+/* --- LATERAL IZQUIERDO --- */
+.d-coffee   { top: 42%; left: 10%; }
+.d-smile    { top: 62%; left: 6%; }
+
+/* --- LATERAL DERECHO --- */
+.d-gift     { top: 68%; right: 8%; }
+
+/* --- ESQUINA INFERIOR IZQUIERDA --- */
+.d-palette  { bottom: 8%; left: 12%; }
+
+/* --- ESQUINA INFERIOR DERECHA --- */
+.d-sun      { bottom: 8%; right: 12%; }
+
+.d-sparkle-1 { top: 25%; left: 32%; }
+.d-sparkle-2 { top: 72%; left: 38%; }
+.d-sparkle-3 { top: 22%; right: 35%; }
+
+.stage-container {
+  z-index: 2;
+  width: 100%;
+  max-width: 420px;
+}
+
+/* ESCENA DEL SOBRE TIPO PAPEL CRAFT MANTECA */
+.envelope-scene {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  cursor: pointer;
+  perspective: 1000px;
+}
+
+.envelope-3d {
+  position: relative;
+  width: 340px;
+  height: 220px;
+  background: #fef08a; /* Interior amarillo pastel */
+  border-radius: 14px;
+  box-shadow: 0 18px 30px -10px rgba(217, 119, 6, 0.12);
+}
+
+.env-back {
+  position: absolute;
+  inset: 0;
+  background: #fde047;
+  border-radius: 14px;
+}
+
+.env-paper-preview {
+  position: absolute;
+  top: 12px;
+  left: 20px;
+  right: 20px;
+  height: 180px;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.paper-header-doodle {
+  font-size: 1.2rem;
+  margin-bottom: 2px;
+}
+
+.paper-line {
+  height: 6px;
+  background: #f5f5f4;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.paper-line.short { width: 45%; background: var(--color-lavender); }
+
+.env-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0, 50% 55%);
+  border-radius: 14px;
+}
+
+.env-flap-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: #fef9c3;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top center;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+  backface-visibility: hidden;
+}
+
+.wax-seal-button {
+  position: absolute;
+  top: 110px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  width: 52px;
+  height: 52px;
+  background: radial-gradient(circle, #f87171 0%, #dc2626 100%);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: white;
+  box-shadow: 0 6px 14px rgba(220, 38, 38, 0.25);
+  border: 2px solid #b91c1c;
+}
+
+.seal-emboss {
+  font-size: 1.3rem;
+}
+
+.action-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #d97706;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  border: 1px solid #fef08a;
+}
+
+/* CARTA ESTILO PAPELERÍA */
+.letter-container {
+position: relative;
+  background: linear-gradient(180deg, #fffefb 0%, #fffbf7 100%); /* Tono crema/pastel suave */
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  border-radius: 28px;
+  padding: 32px 24px 28px;
+  box-shadow: 
+    0 20px 40px -15px rgba(244, 114, 182, 0.15), /* Resplandor rosa sutil */
+    0 10px 25px -5px rgba(0, 0, 0, 0.05);        /* Sombra de profundidad */
+  backdrop-filter: blur(8px);
+  max-width: 400px;
+  width: 90%;
+  margin: 0 auto;
+}
+/* Resaltado dulce para la frase final de la carta */
+.letter-closing {
+  display: block;
+  margin-top: 12px;
+  font-weight: 700;
+  color: #ec4899;
+}
+/* Cinta Adhesiva Wasabi Tape */
+.washi-tape {
+ position: absolute;
+  top: -12px;
+  right: 40px;
+  width: 90px;
+  height: 26px;
+  background: rgba(224, 198, 255, 0.65);
+  border-left: 2px dashed rgba(255, 255, 255, 0.6);
+  border-right: 2px dashed rgba(255, 255, 255, 0.6);
+  transform: rotate(3deg);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+}
+
+.badge-teacher {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: #f3e8ff;
+  color: #7e22ce;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 100px;
+}
+
+.letter-content h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; color: #1c1917; }
+.letter-content p { font-size: 0.95rem; line-height: 1.6; color: #44403c; }
+
+/* TICKET DE CINE CÁLIDO */
+/* ==========================================
+   TICKET DE CINE VIP REDISEÑADO
+   ========================================== */
+
+.cinema-ticket {
+  position: relative;
+  background: linear-gradient(135deg, #fff5f8 0%, #ffffff 100%);
+  border: 2px dashed #f472b6;
+  border-radius: 16px;
+  padding: 18px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 10px 25px -5px rgba(244, 114, 182, 0.15);
+  overflow: hidden;
+}
+
+/* Efecto Muesca (Cortes laterales de ticket) */
+.cinema-ticket::before,
+.cinema-ticket::after {
+content: '';
+  position: absolute;
+  top: 36px; /* Lo alinea exactamente con la línea punteada superior */
+  width: 16px;
+  height: 16px;
+  background-color: #fcfbfa; /* O el color exacto del fondo de tu tarjeta */
+  border: 2px solid #f472b6;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.cinema-ticket::before {
+  left: -12px;
+  border-left: none;
+}
+
+.cinema-ticket::after {
+  right: -12px;
+  border-right: none;
+}
+
+/* Encabezado del Ticket */
+.ticket-header-tag {
+  display: flex;
+  justify-content: center; /* Lo centra perfectamente */
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #ec4899;
+  border-bottom: 1px dashed #fbcfe8;
+  padding-bottom: 8px;
+  white-space: nowrap; /* Evita que brinque a dos líneas */
+}
+
+.ticket-header-tag span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Cuerpo del Ticket: Póster e Info */
+.ticket-main-content {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+}
+
+.ticket-poster-img {
+  width: 75px;
+  height: 105px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  flex-shrink: 0;
+  border: 2px solid #fff;
+}
+
+.ticket-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-grow: 1;
+}
+
+.ticket-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.ticket-genre {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.ticket-pills {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.ticket-pill {
+  background-color: #fce7f3;
+  color: #db2777;
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+/* Botón de reproducción destacado dentro del ticket */
+.ticket-play-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, #ff4b72 0%, #ec4899 100%);
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(236, 72, 153, 0.35);
+  transition: all 0.2s ease;
+}
+
+.ticket-play-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(236, 72, 153, 0.45);
+  background: linear-gradient(135deg, #ff3360 0%, #db2777 100%);
+}
+
+.ticket-play-btn:active {
+  transform: translateY(0);
+}
+
+.cutout { 
+  position: absolute; 
+  top: 50%; 
+  width: 16px; 
+  height: 16px; 
+  background: #fafaf9; 
+  border-radius: 50%; 
+  transform: translateY(-50%); 
+}
+
+.cutout.left { left: -8px; }
+.cutout.right { right: -8px; }
+
+.play-button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f43f5e, #e11d48);
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(244, 63, 94, 0.22);
+}
+
+
+/* REPRODUCTOR */
+.player-wrapper {  
+  z-index: 2;
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.nav-back-button { align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: #ffffff; border: 1px solid #e7e5e4; border-radius: 100px; font-size: 0.875rem; font-weight: 600; cursor: pointer; color: #292524; }
+.video-viewport { width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: var(--radius-xl); overflow: hidden; }
+.video-viewport video { width: 100%; height: 100%; object-fit: contain; }
+
+/* REPRODUCTOR Y CONTROLES PERSONALIZADOS */
+.player-wrapper {
+  z-index: 2;
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+/* =========================
+   FULLSCREEN DEL REPRODUCTOR
+========================= */
+
+.player-wrapper:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  background: #000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+}
+
+/* Ocultar "Volver a la carta" en fullscreen */
+.player-wrapper:fullscreen .nav-back-button {
+  display: none;
+}
+
+/* El área del video ocupa correctamente el espacio */
+.player-wrapper:fullscreen .video-viewport {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  aspect-ratio: auto;
+
+  border-radius: 0;
+}
+
+/* Mantener el video completo */
+.player-wrapper:fullscreen .video-viewport video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.video-viewport {
+ position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #000;
+  border-radius: 20px;
+}
+
+.video-viewport video {
+display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+@media (max-width: 600px) {
+  .app-viewport {
+    padding: 0;
+  }
+
+  .player-wrapper {
+width: 100%;
+    height: 100dvh;
+    max-width: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra el video verticalmente */
+    align-items: center;
+    position: relative;
+    padding: 16px 0;
+  }
+
+  .nav-back-button {
+    position: absolute;
+    top: 20px;
+    left: 16px;
+    z-index: 20;
+    margin: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .video-viewport {
+    width: 100%;
+    border-radius: 0;
+    max-height: 75vh;
+  }
+}
+
+@media (max-width: 380px) {
+  .envelope-3d {
+    width: 290px;
+    height: 190px;
+  }
+  
+  .env-paper-preview {
+    left: 12px;
+    right: 12px;
+    height: 150px;
+  }
+  
+  .wax-seal-button {
+    top: 95px;
+    width: 46px;
+    height: 46px;
+  }
+  .video-viewport {
+    width: 100%;
+    border-radius: 0;
+    max-height: 75vh;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .app-viewport {
+    padding: 12px;
+  }
+
+  .letter-container {
+    padding: 24px 18px 20px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .letter-content h1 {
+    font-size: 1.35rem;
+  }
+
+  .letter-content p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }}
+
+  .cinema-ticket {
+    padding: 14px;
+    margin-top: 14px;
+    gap: 10px;
+  }
+
+  .ticket-poster-img {
+    width: 65px;
+    height: 90px;
+  }
+
+  .ticket-title {
+    font-size: 1.05rem;
+  }
+
+  .ticket-play-btn {
+    padding: 10px;
+    font-size: 0.88rem;
+  }
+  
+  /* Desaparece el slider de volumen en móvil ya que usan los botones físicos del teléfono */
+  .volume-slider {
+    display: none;
+  }
+
+
+
+/* BARRA DE CONTROLES SUPERPUESTA */
+.custom-controls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 45px 22px 14px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.88) 0%,
+    rgba(0, 0, 0, 0.65) 45%,
+    rgba(0, 0, 0, 0) 100%
+  );
+
+   opacity: 0;
+  transition: opacity 0.3s ease;
+
+  z-index: 10;
+
+  pointer-events: none;
+}
+
+.video-viewport:hover .custom-controls,
+.custom-controls:hover {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.progress-slider {
+  --progress: 0%;
+
+  width: 100%;
+  height: 5px;
+
+  margin: 0;
+  padding: 0;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  background: linear-gradient(
+    to right,
+    #f472b6 0%,
+    #f472b6 var(--progress),
+    rgba(255, 255, 255, 0.3) var(--progress),
+    rgba(255, 255, 255, 0.3) 100%
+  );
+
+  border-radius: 10px;
+
+  cursor: pointer;
+  outline: none;
+}
+
+.progress-slider::-webkit-slider-runnable-track {
+  height: 5px;
+
+  background: transparent;
+
+  border-radius: 10px;
+}
+
+.progress-slider::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+
+  width: 15px;
+  height: 15px;
+
+  margin-top: -5px;
+
+  border: 2px solid white;
+  border-radius: 50%;
+
+  background: #f472b6;
+  box-shadow:
+    0 2px 8px rgba(244, 114, 182, 0.6);
+
+  transition: transform 0.15s ease;
+}
+
+.progress-slider:hover::-webkit-slider-thumb {
+  transform: scale(1.2);
+}
+
+
+.controls-row {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 42px;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.control-group.left,
+.control-group.right {
+  display: flex;
+  align-items: center;
+}
+.control-btn {
+  position: relative;
+
+  width: 38px;
+  height: 38px;
+
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: transparent;
+  border: none;
+
+  color: white;
+
+  cursor: pointer;
+
+  border-radius: 50%;
+
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease;
+}
+
+.control-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.control-btn:active {
+  transform: scale(0.88);
+}
+
+.control-btn svg {
+  width: 21px;
+  height: 21px;
+}
+
+
+
+
+.control-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.control-btn:active {
+  transform: scale(0.95);
+}
+
+/* Indicadores de tiempo (-10 / +10) */
+.time-hint {
+  position: absolute;
+  font-size: 0.7rem;
+  font-weight: bold;
+  bottom: 6px;
+  right: 6px;
+  background: rgba(255,255,255,0.2);
+  padding: 1px 3px;
+  border-radius: 4px;
+}
+
+/* CONTROL DE VOLUMEN */
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.volume-slider {
+  width: 100px;
+  cursor: pointer;
+  accent-color: #f472b6; /* Color rosa tierno para el slider */
+  height: 6px;
+}
+
+/* Estilo para navegadores Webkit (Chrome/Safari) para hacer el slider más tierno */
+.volume-slider::-webkit-slider-runnable-track {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+  height: 6px;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 14px;
+  width: 14px;
+  background: #ffffff;
+  border-radius: 50%;
+  margin-top: -4px; /* Centrar el thumb */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
